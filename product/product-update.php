@@ -2,21 +2,12 @@
 $parentTitle = "商品管理";
 $title = "商品列表";
 
-if (!isset($_GET["id"]) || !isset($_GET["mode"])) {
+if (!isset($_GET["id"])) {
+    // die("資料不存在");
     header("location: ../404.php");
 }
 
 $product_id = $_GET["id"];
-// 編輯模式 or 資訊模式
-$mode = $_GET["mode"];
-
-if ($mode == "info") {
-    $readonly = "disabled readonly";
-} elseif ($mode == "edit") {
-    $readonly = "";
-} else {
-    header("location: ../404.php");
-}
 
 require_once("../db_connect.php");
 // 找商品的資訊
@@ -61,12 +52,8 @@ foreach ($category1 as $cate1) {
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>商品 <?= $product["id"] ?></title>
-
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="../css/styles.css" rel="stylesheet" />
-
-    <!-- 切換按鈕 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
@@ -79,45 +66,43 @@ foreach ($category1 as $cate1) {
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">商品 <?= $product_id ?> 詳細資訊</h1>
+                    <h1 class="mt-4">商品 <?= $product_id ?> 編輯</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><?= $parentTitle ?></li>
                         <li class="breadcrumb-item"><?= $title ?></li>
                         <li class="breadcrumb-item active">商品 <?= $product_id ?></li>
                     </ol>
-                    <!-- 編輯表單 -->
-                    <form action="doUpdate.php" method="post">
-                        <div class="row mx-0 flex-column align-items-center">
-                            <!-- 圖檔放在images/product數字，數字為類別一 -->
-                            <figure class="text-center">
-                                <img src="../images/product<?= $product["category_1"] ?>/<?= $product["img"] ?>" alt="<?= $product["img"] ?>" class="img-fluid">
-                            </figure>
-                            <div class="card p-3 col-8 mb-3">
+                    <div class="row mx-0 justify-content-center">
+                        <!-- 圖檔放在images/product數字，數字為類別一 -->
+                        <figure class="text-center">
+                            <img src="../images/product<?= $product["category_1"] ?>/<?= $product["img"] ?>" alt="">
+                        </figure>
+                        <div class="card p-3 col-8 mb-3">
+                            <form action="doUpdate.php" method="post">
                                 <input type="hidden" name="id" value="<?= $product["id"] ?>">
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>商品名稱</th>
                                         <td>
-                                            <input type="text" value="<?= $product["name"] ?>" name="name" class="form-control" <?= $readonly ?>>
+                                            <input type="text" value="<?= $product["name"] ?>" name="name" class="form-control">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>品牌</th>
                                         <td>
-                                            <input type="text" value="<?= $product["brand"] ?>" name="brand" class="form-control" <?= $readonly ?>>
+                                            <input type="text" value="<?= $product["brand"] ?>" name="brand" class="form-control">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>商品類別</th>
                                         <td class="d-flex align-items-center">
-                                            <select name="category_1" id="category_1" class="form-control text-center w-25" <?= $readonly ?>>
+                                            <select name="category_1" id="category_1" class="form-control text-center w-25">
                                                 <?php foreach ($allCate as $cate) : ?>
-                                                    <option value="<?= $cate["cate1"] ?>" <?php if ($cate["cate1"] == $product["c1_name"]) echo "selected"; ?>><?= $cate["cate1"] ?>
-                                                    </option>
+                                                    <option value="<?= $cate["cate1"] ?>" <?php if ($cate["cate1"] == $product["c1_name"]) echo "selected"; ?>><?= $cate["cate1"] ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                             <span class="px-3">/</span>
-                                            <select name="category_2" id="category_2" class="form-control text-center w-25" <?= $readonly ?>>
+                                            <select name="category_2" id="category_2" class="form-control text-center w-25">
                                                 <?php foreach ($allCate[$product["parent_category"] - 1]["cate2"] as $cate) : ?>
                                                     <option value="<?= $cate ?>" <?php if ($cate == $product["c2_name"]) echo "selected"; ?>><?= $cate ?></option>
                                                 <?php endforeach; ?>
@@ -128,45 +113,43 @@ foreach ($category1 as $cate1) {
                                     <tr>
                                         <th>商品價格</th>
                                         <td>
-                                            <input type="number" value="<?= $product["price"] ?>" name="price" min="0" class="form-control" <?= $readonly ?>>
+                                            <input type="number" value="<?= $product["price"] ?>" name="price" min="0" class="form-control">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>商品庫存</th>
                                         <td>
-                                            <input type="number" value="<?= $product["quantity"] ?>" name="quantity" min="0" class="form-control" <?= $readonly ?>>
+                                            <input type="number" value="<?= $product["quantity"] ?>" name="quantity" min="0" class="form-control">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>商品描述</th>
                                         <td>
-                                            <textarea name="description" cols="30" rows="10" class="form-control" style="resize: none" <?= $readonly ?>><?= $product["description"] ?></textarea>
+                                            <textarea name="description" cols="30" rows="10" class="form-control" style="resize: none"><?= $product["description"] ?></textarea>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>上下架狀態</th>
                                         <td>
                                             <?php if ($product["valid"] == 1) : ?>
-                                                <input type="checkbox" name="valid" checked data-toggle="toggle" data-onlabel="上架" data-offlabel="下架" data-onstyle="success" data-offstyle="danger" <?= $readonly ?>>
-                                            <?php elseif ($product["valid"] == 0) : ?>
-                                                <input type="checkbox" name="valid" data-toggle="toggle" data-onlabel="上架" data-offlabel="下架" data-onstyle="success" data-offstyle="danger" <?= $readonly ?>>
+                                                <span class="text-success">
+                                                    <i class="fa-solid fa-check"></i> 上架
+                                                </span>
+                                            <?php else : ?>
+                                                <span class="text-danger">
+                                                    <i class="fa-solid fa-xmark"></i> 下架
+                                                </span>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
                                 </table>
-                                <!-- 編輯按鈕 -->
-                                <div class="col d-flex justify-content-center mb-3">
-                                    <?php if ($mode == "info") : ?>
-                                        <a href="product.php?mode=edit&id=<?= $product["id"] ?>" class="btn btn-success">編輯</a>
-                                    <?php else : ?>
-                                        <button type="submit" class="btn btn-success">修改</button>
-                                        <a href="product.php?mode=info&id=<?= $product_id ?>" class="btn btn-secondary">取消</a>
-                                    <?php endif; ?>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-success">修改</button>
+                                    <a href="product.php?id=<?= $product_id ?>" class="btn btn-secondary">取消</a>
                                 </div>
-                            </div>
-
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </main>
             <!-- footer -->
@@ -176,8 +159,6 @@ foreach ($category1 as $cate1) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="../js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/js/bootstrap5-toggle.ecmas.min.js">
-    </script>
     <script src="../js/datatables-simple-demo.js"></script>
     <script>
         // 點選類別一的類別，類別二選單只會出現相對應的類別

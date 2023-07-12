@@ -6,8 +6,8 @@ require_once("../db_connect.php");
 // 找商品的資訊
 $sql = "SELECT product.*, category_1.name AS c1_name, category_2.name AS c2_name
         FROM product
-        JOIN category_1 ON product.category_1 = category_1.id
-        JOIN category_2 ON product.category_2 = category_2.id
+        JOIN category_1 ON product.category_1 = category_1.c1_id
+        JOIN category_2 ON product.category_2 = category_2.c2_id
         WHERE valid = 1 AND is_groupBy = 0
         ORDER BY id ASC";
 $result = $conn->query($sql);
@@ -55,29 +55,24 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                                         <th>商品類別</th>
                                         <th>商品價格</th>
                                         <th>商品庫存</th>
+                                        <th>操作</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>商品名稱</th>
-                                        <th>品牌</th>
-                                        <th>商品類別</th>
-                                        <th>商品價格</th>
-                                        <th>商品庫存</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     <?php foreach ($products as $product) : ?>
                                         <tr>
                                             <td><?= $product["id"] ?></td>
                                             <td>
-                                                <a href="product.php?id=<?= $product["id"] ?>"><?= $product["name"] ?></a>
+                                                <?= $product["name"] ?>
                                             </td>
                                             <td><?= $product["brand"] ?></td>
                                             <td><?= $product["c1_name"] ?> / <?= $product["c2_name"] ?></td>
                                             <td><?= $product["price"] ?></td>
                                             <td><?= $product["quantity"] ?></td>
+                                            <td>
+                                                <a href="product.php?mode=info&id=<?= $product["id"] ?>" title="詳細資訊"><i class="fa-solid fa-circle-info"></i></a>
+                                                <a href="product.php?mode=edit&id=<?= $product["id"] ?>" title="編輯"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
