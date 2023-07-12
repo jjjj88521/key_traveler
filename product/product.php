@@ -60,7 +60,9 @@ foreach ($category1 as $cate1) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>商品 <?= $product["id"] ?></title>
+    <title>商品
+        <?= $product["id"] ?>
+    </title>
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="../css/styles.css" rel="stylesheet" />
@@ -79,11 +81,18 @@ foreach ($category1 as $cate1) {
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">商品 <?= $product_id ?> 詳細資訊</h1>
+                    <h1 class="mt-4">商品 <?= $product_id ?> 詳細資訊
+                    </h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><?= $parentTitle ?></li>
-                        <li class="breadcrumb-item"><?= $title ?></li>
-                        <li class="breadcrumb-item active">商品 <?= $product_id ?></li>
+                        <li class="breadcrumb-item">
+                            <?= $parentTitle ?>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <?= $title ?>
+                        </li>
+                        <li class="breadcrumb-item active">商品
+                            <?= $product_id ?>
+                        </li>
                     </ol>
                     <!-- 編輯表單 -->
                     <form action="doUpdate.php" method="post">
@@ -112,14 +121,16 @@ foreach ($category1 as $cate1) {
                                         <td class="d-flex align-items-center">
                                             <select name="category_1" id="category_1" class="form-control text-center w-25" <?= $readonly ?>>
                                                 <?php foreach ($allCate as $cate) : ?>
-                                                    <option value="<?= $cate["cate1"] ?>" <?php if ($cate["cate1"] == $product["c1_name"]) echo "selected"; ?>><?= $cate["cate1"] ?>
+                                                    <option value="<?= $cate["cate1"] ?>" <?php if ($cate["cate1"] == $product["c1_name"])
+                                                                                                echo "selected"; ?>><?= $cate["cate1"] ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
                                             <span class="px-3">/</span>
                                             <select name="category_2" id="category_2" class="form-control text-center w-25" <?= $readonly ?>>
                                                 <?php foreach ($allCate[$product["parent_category"] - 1]["cate2"] as $cate) : ?>
-                                                    <option value="<?= $cate ?>" <?php if ($cate == $product["c2_name"]) echo "selected"; ?>><?= $cate ?></option>
+                                                    <option value="<?= $cate ?>" <?php if ($cate == $product["c2_name"])
+                                                                                        echo "selected"; ?>><?= $cate ?></option>
                                                 <?php endforeach; ?>
                                             </select>
 
