@@ -12,7 +12,7 @@ $description = $_POST["description"];
 $cate_1 = $_POST["category_1"];
 $cate_2 = $_POST["category_2"];
 $quantity = $_POST["quantity"];
-$valid = isset($_POST["valid"]) ? 1 : 0;
+$valid = isset($_POST["valid"]) ? 1 : -1;
 
 // 取得類別
 // 類別一

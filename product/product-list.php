@@ -1,5 +1,5 @@
 <?php
-$parentTitle = "商品管理";
+// 網頁 title
 $title = "商品列表";
 
 require_once("../db_connect.php");
@@ -17,19 +17,10 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title><?= $title ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-    <link href="../css/styles.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-</head>
+<!-- head -->
+<?php include("../template/head.php") ?>
 
-<body class="sb-nav-fixed">
+<body class="sb-nav-fixed pe-0">
     <!-- navbar -->
     <?php include("../template/navbar.php") ?>
     <div id="layoutSidenav">
@@ -39,13 +30,17 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4"><?= $title ?></h1>
+                    <!-- breadcrumb -->
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><?= $parentTitle ?></li>
+                        <li class="breadcrumb-item">商品管理</li>
                         <li class="breadcrumb-item active"><?= $title ?></li>
                     </ol>
                     <div class="card mb-4">
-                        <!-- 主要表格 -->
+                        <!-- 表格放卡片裡面 -->
                         <div class="card-body">
+                            <div>
+
+                            </div>
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
@@ -60,6 +55,24 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                                 </thead>
                                 <tbody>
                                     <?php foreach ($products as $product) : ?>
+                                        <!-- 確認刪除框框 -->
+                                        <div class="modal fade" id="infoModal<?= $product["id"] ?>" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">確認刪除</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>是否刪除商品 <?= $product["id"] ?>?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                                        <a class="btn btn-danger" href="doDelete.php?id=<?= $product["id"] ?>">刪除</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <tr>
                                             <td><?= $product["id"] ?></td>
                                             <td>
@@ -70,8 +83,17 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                                             <td><?= $product["price"] ?></td>
                                             <td><?= $product["quantity"] ?></td>
                                             <td>
-                                                <a href="product.php?mode=info&id=<?= $product["id"] ?>" title="詳細資訊"><i class="fa-solid fa-circle-info"></i></a>
-                                                <a href="product.php?mode=edit&id=<?= $product["id"] ?>" title="編輯"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <div class="d-flex align-items-center">
+                                                    <a href="product.php?mode=info&id=<?= $product["id"] ?>" title="詳細資訊" class="btn btn-link px-1">
+                                                        <i class="fa-solid fa-circle-info"></i>
+                                                    </a>
+                                                    <a href="product.php?mode=edit&id=<?= $product["id"] ?>" title="編輯" class="btn btn-link px-1">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    </a>
+                                                    <button title="刪除" type="button" data-bs-toggle="modal" data-bs-target="#infoModal<?= $product["id"] ?>" class="btn btn-link px-1 deleteBtn">
+                                                        <i class="fa-solid fa-trash text-danger"></i>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -85,10 +107,15 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
             <?php include("../template/footer.php") ?>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="../js/scripts.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-    <script src="../js/datatables-simple-demo.js"></script>
+    <?php include("../template/footerJs.php") ?>
+    <script>
+        const deleteBtn = document.querySelectorAll(".deleteBtn");
+        deleteBtn.forEach(item => {
+            item.addEventListener("click", function() {
+                console.log("<?= $product["id"] ?>");
+            })
+        })
+    </script>
 </body>
 
 </html>

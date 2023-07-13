@@ -2,7 +2,7 @@
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
-                <!-- 會員管理 -->
+                <!-- =====會員管理===== -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false" aria-controls="users">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-columns"></i>
@@ -18,7 +18,7 @@
                         <a class="nav-link" href="tables.php">下架商品</a>
                     </nav>
                 </div>
-                <!-- 商品管理 -->
+                <!-- =====商品管理===== -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#order" aria-expanded="false" aria-controls="order">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-columns"></i>
@@ -34,7 +34,7 @@
                         <a class="nav-link" href="tables.php">下架商品</a>
                     </nav>
                 </div>
-                <!-- 類別管理 -->
+                <!-- =====類別管理===== -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#category" aria-expanded="false" aria-controls="category">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-columns"></i>
@@ -50,7 +50,7 @@
                         <a class="nav-link" href="tables.php">下架商品</a>
                     </nav>
                 </div>
-                <!-- 訂單管理 -->
+                <!-- =====訂單管理===== -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#product" aria-expanded="false" aria-controls="product">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-columns"></i>
@@ -66,7 +66,7 @@
                         <a class="nav-link" href="tables.php">下架商品</a>
                     </nav>
                 </div>
-                <!-- 文章管理 -->
+                <!-- =====文章管理===== -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#article" aria-expanded="false" aria-controls="article">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-columns"></i>
@@ -82,7 +82,7 @@
                         <a class="nav-link" href="tables.php">下架商品</a>
                     </nav>
                 </div>
-                <!-- 行銷管理 -->
+                <!-- =====行銷管理===== -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#marketing" aria-expanded="false" aria-controls="marketing">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-columns"></i>
@@ -98,7 +98,7 @@
                         <a class="nav-link" href="tables.php">下架商品</a>
                     </nav>
                 </div>
-                <!-- 租用商品管理 -->
+                <!-- =====租用商品管理===== -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#rent-product" aria-expanded="false" aria-controls="rent-product">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-columns"></i>
@@ -115,10 +115,6 @@
                     </nav>
                 </div>
             </div>
-        </div>
-        <div class="sb-sidenav-footer">
-            <div class="small">Logged in as:</div>
-            Start Bootstrap
         </div>
     </nav>
 </div>

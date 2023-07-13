@@ -1,6 +1,4 @@
 <?php
-$parentTitle = "商品管理";
-$title = "商品列表";
 
 if (!isset($_GET["id"]) || !isset($_GET["mode"])) {
     header("location: ../404.php");
@@ -28,6 +26,9 @@ $sql = "SELECT product.*, category_1.name AS c1_name, category_2.name AS c2_name
 $result = $conn->query($sql);
 $product = $result->fetch_assoc();
 
+// 網頁標題
+$title = "商品 $product_id";
+
 // 取得所有類別 為了能夠選取並更改類別
 // 類別一
 $sqlCategory1 = "SELECT * FROM category_1";
@@ -54,25 +55,28 @@ foreach ($category1 as $cate1) {
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>商品
-        <?= $product["id"] ?>
-    </title>
+<!-- head -->
+<?php include("../template/head.php") ?>
 
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-    <link href="../css/styles.css" rel="stylesheet" />
-
-    <!-- 切換按鈕 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-</head>
-
-<body class="sb-nav-fixed">
+<body class="sb-nav-fixed pe-0">
+    <!-- 確認刪除框框 -->
+    <div class="modal fade" id="infoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">確認刪除</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>是否刪除?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <a class="btn btn-danger" href="doDelete.php?id=<?= $product["id"] ?>">刪除</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- navbar -->
     <?php include("../template/navbar.php") ?>
     <div id="layoutSidenav">
@@ -85,10 +89,10 @@ foreach ($category1 as $cate1) {
                     </h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item">
-                            <?= $parentTitle ?>
+                            商品管理
                         </li>
                         <li class="breadcrumb-item">
-                            <?= $title ?>
+                            商品列表
                         </li>
                         <li class="breadcrumb-item active">商品
                             <?= $product_id ?>
@@ -159,19 +163,24 @@ foreach ($category1 as $cate1) {
                                         <td>
                                             <?php if ($product["valid"] == 1) : ?>
                                                 <input type="checkbox" name="valid" checked data-toggle="toggle" data-onlabel="上架" data-offlabel="下架" data-onstyle="success" data-offstyle="danger" <?= $readonly ?>>
-                                            <?php elseif ($product["valid"] == 0) : ?>
+                                            <?php elseif ($product["valid"] == -1) : ?>
                                                 <input type="checkbox" name="valid" data-toggle="toggle" data-onlabel="上架" data-offlabel="下架" data-onstyle="success" data-offstyle="danger" <?= $readonly ?>>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
                                 </table>
                                 <!-- 編輯按鈕 -->
-                                <div class="col d-flex justify-content-center mb-3">
+                                <div class="col d-flex justify-content-between mb-0">
                                     <?php if ($mode == "info") : ?>
-                                        <a href="product.php?mode=edit&id=<?= $product["id"] ?>" class="btn btn-success">編輯</a>
+                                        <a href="product.php?mode=edit&id=<?= $product["id"] ?>" class="btn btn-success mx-2">編輯</a>
                                     <?php else : ?>
-                                        <button type="submit" class="btn btn-success">修改</button>
-                                        <a href="product.php?mode=info&id=<?= $product_id ?>" class="btn btn-secondary">取消</a>
+                                        <div>
+                                            <button type="submit" class="btn btn-success">修改</button>
+                                            <a href="product.php?mode=info&id=<?= $product_id ?>" class="btn btn-secondary mx-2">取消</a>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#infoModal" id="deleteBtn">刪除</button>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -184,11 +193,11 @@ foreach ($category1 as $cate1) {
             <?php include("../template/footer.php") ?>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="../js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/js/bootstrap5-toggle.ecmas.min.js">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/js/bootstrap5-toggle.ecmas.min.js"></script>
+
     <script src="../js/datatables-simple-demo.js"></script>
     <script>
         // 點選類別一的類別，類別二選單只會出現相對應的類別
