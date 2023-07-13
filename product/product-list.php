@@ -8,7 +8,7 @@ $sql = "SELECT product.*, category_1.name AS c1_name, category_2.name AS c2_name
         FROM product
         JOIN category_1 ON product.category_1 = category_1.c1_id
         JOIN category_2 ON product.category_2 = category_2.c2_id
-        WHERE valid = 1 AND is_groupBy = 0
+        WHERE valid = 1 AND is_groupBuy = 0
         ORDER BY id ASC";
 $result = $conn->query($sql);
 $products = $result->fetch_all(MYSQLI_ASSOC);
