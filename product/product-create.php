@@ -4,28 +4,7 @@ $title = "新增商品";
 
 require_once("../db_connect.php");
 
-// 取得所有類別 為了能夠選取並更改類別
-// 類別一
-$sqlCategory1 = "SELECT * FROM category_1";
-$resultCate1 = $conn->query($sqlCategory1);
-$category1 = $resultCate1->fetch_all(MYSQLI_ASSOC);
-// 類別二
-$sqlCategory2 = "SELECT * FROM category_2";
-$resultCate2 = $conn->query($sqlCategory2);
-$category2 = $resultCate2->fetch_all(MYSQLI_ASSOC);
-
-// 將所有類別變成多維陣列
-$allCate = array();
-foreach ($category1 as $cate1) {
-    $cate["cate1"] = $cate1["name"];
-    $cate["cate2"] = array();
-    foreach ($category2 as $cate2) {
-        if ($cate2["parent_category"] == $cate1["c1_id"]) {
-            array_push($cate["cate2"], $cate2["name"]);
-        }
-    }
-    array_push($allCate, $cate);
-}
+include("./include/getCategory.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,7 +75,7 @@ foreach ($category1 as $cate1) {
                                     <tr>
                                         <th class="w-25">商品型態</th>
                                         <td>
-                                            <input type="checkbox" name="is_groupBuy" data-toggle="toggle" data-onlabel="團購商品" data-offlabel="一般商品" data-onstyle="success" data-offstyle="secondary" id="groupBuyCheck">
+                                            <input type="checkbox" name="is_groupBuy" data-toggle="toggle" data-onlabel="團購商品" data-offlabel="一般商品" data-onstyle="primary" data-offstyle="secondary" id="groupBuyCheck">
                                         </td>
                                     </tr>
                                     <tr>
@@ -133,7 +112,7 @@ foreach ($category1 as $cate1) {
                                         <th class="w-25">團購時間</th>
                                         <td class="d-flex align-items-center">
                                             <input type="date" class="form-control" name="start">
-                                            <span class="px-3">/</span>
+                                            <span class="px-3">~</span>
                                             <input type="date" class="form-control" name="end">
                                         </td>
                                     </tr>

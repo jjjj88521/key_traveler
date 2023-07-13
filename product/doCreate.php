@@ -23,79 +23,88 @@ $sqlCategory2 = "SELECT c2_id FROM category_2 WHERE name = '$cate_2'";
 $resultCate2 = $conn->query($sqlCategory2);
 $cate_2 = $resultCate2->fetch_assoc()["c2_id"];
 
-// echo $name . "<br>";
-// echo $cate_1 . "<br>";
-// echo $cate_2 . "<br>";
-// echo $price . "<br>";
-// echo $img . "<br>";
-// echo $description . "<br>";
-// echo $quantity . "<br>";
-// echo $brand . "<br>";
-// echo $is_groupBuy . "<br>";
-// echo $start . "<br>";
-// echo $end . "<br>";
-// echo $target_people . "<br>";
+// ===== 新增商品操作 =====
+// 先將auto increment 都設為最大值
+// 先取得最大的 id
+$sql_maxId = "SELECT MAX(id) AS max_id FROM product;";
+$result_maxId = $conn->query($sql_maxId);
+$row_maxId = $result_maxId->fetch_assoc();
+$maxId = $row_maxId['max_id'];
 
-// 新增商品操作
-// 插入商品資料
-$sql1 = "ALTER TABLE product AUTO_INCREMENT = 1;";
+// 將自動增量設置為最大的 id
+$sql_resetAI = "ALTER TABLE product AUTO_INCREMENT = " . ($maxId + 1) . ";";
+$conn->query($sql_resetAI);
 
-$sql1 .= "INSERT INTO product (name, category_1, category_2, img, price, quantity, brand, is_groupBuy, valid, description)
+// 開始新增商品
+$sql1 = "INSERT INTO product (name, category_1, category_2, img, price, quantity, brand, is_groupBuy, valid, description)
     VALUE ('$name', '$cate_1', '$cate_2', '$img', '$price', '$quantity', '$brand', '$is_groupBuy', 1, '$description');";
 
-// 假如為團購商品，就需要新增資訊進團購商品資料表
-
-
-if ($conn->multi_query($sql1) === TRUE) {
+if ($conn->query($sql1) === TRUE) {
     // 取得資料表新增當下的 id
     $latestId = $conn->insert_id;
+    echo "商品id: " . $latestId . "<br>";
+    echo "新增商品成功";
+
+    // 假如為團購商品，就需要新增資訊進團購商品資料表
     if ($is_groupBuy == 1) {
         $start = $_POST["start"];
         $end = $_POST["end"];
         $target_people = $_POST["target_people"];
+        $sql_maxId = "SELECT MAX(id) AS max_id FROM group_buy;";
+        $result_maxId = $conn->query($sql_maxId);
+        $row_maxId = $result_maxId->fetch_assoc();
+        $maxId = $row_maxId['max_id'];
+
+        // 將自動增量設置為最大的 id
+        $sql_resetAI = "ALTER TABLE group_buy AUTO_INCREMENT = " . ($maxId + 1) . ";";
+        $conn->query($sql_resetAI);
         // 插入團購資訊
-        $sql2 = "ALTER TABLE group_buy AUTO_INCREMENT = 1;";
-        $sql2 .= "INSERT INTO group_buy (product_id, start, end, target_people, current_people)
+        $sql2 = "INSERT INTO group_buy (product_id, start, end, target_people, current_people)
                   VALUE ('$latestId', '$start', '$end', '$target_people', 0);";
+        if ($conn->query($sql2) === TRUE) {
+            echo "新增團購資訊成功";
+        } else {
+            echo "新增團購商品失敗";
+        }
     }
     // 資料庫操作成功 回到指定的頁面
-    header("location: create_user.php");
+    // header("location: create_user.php");
 } else {
     echo "新增資料錯誤: " . $conn->error;
 }
 
 // 利用事務的方式做
-$conn->begin_transaction();
-try {
-    // 插入商品資料
-    $sql1 = "ALTER TABLE product AUTO_INCREMENT = 1;";
+// $conn->begin_transaction();
+// try {
+//     // 插入商品資料
+//     $sql1 = "ALTER TABLE product AUTO_INCREMENT = 1;";
 
-    $sql1 .= "INSERT INTO product (name, category_1, category_2, img, price, quantity, brand, is_groupBuy, valid, description)
-    VALUE ('$name', '$cate_1', '$cate_2', '$img', '$price', '$quantity', '$brand', '$is_groupBuy', 1, '$description');";
-    $stmt1 = $conn->prepare($sql1);
-    $stmt1->execute();
+//     $sql1 .= "INSERT INTO product (name, category_1, category_2, img, price, quantity, brand, is_groupBuy, valid, description)
+//     VALUE ('$name', '$cate_1', '$cate_2', '$img', '$price', '$quantity', '$brand', '$is_groupBuy', 1, '$description');";
+//     $stmt1 = $conn->prepare($sql1);
+//     $stmt1->execute();
 
-    $product_id = $conn->insert_id;
+//     $product_id = $conn->insert_id;
 
-    if ($is_groupBuy === 1) {
-        $start = $_POST["start"];
-        $end = $_POST["end"];
-        $target_people = $_POST["target_people"];
-        // 插入團購資訊
-        $sql2 = "ALTER TABLE group_buy AUTO_INCREMENT = 1;";
-        $sql2 .= "INSERT INTO group_buy (product_id, start, end, target_people, current_people)
-                  VALUE ('$product_id', '$start', '$end', '$target_people', 0);";
-        $stmt2 = $conn->prepare($sql2);
-        $stmt2->execute();
-    }
-    // 提交事務
-    $conn->commit();
+//     if ($is_groupBuy === 1) {
+//         $start = $_POST["start"];
+//         $end = $_POST["end"];
+//         $target_people = $_POST["target_people"];
+//         // 插入團購資訊
+//         $sql2 = "ALTER TABLE group_buy AUTO_INCREMENT = 1;";
+//         $sql2 .= "INSERT INTO group_buy (product_id, start, end, target_people, current_people)
+//                   VALUE ('$product_id', '$start', '$end', '$target_people', 0);";
+//         $stmt2 = $conn->prepare($sql2);
+//         $stmt2->execute();
+//     }
+//     // 提交事務
+//     $conn->commit();
 
-    echo "成功新增";
-} catch (Exception $e) {
-    // 錯誤就回滾事務
-    $conn->rollback();
-    echo "新增失敗" . $e->getMessage();
-}
+//     echo "成功新增";
+// } catch (Exception $e) {
+//     // 錯誤就回滾事務
+//     $conn->rollback();
+//     echo "新增失敗" . $e->getMessage();
+// }
 
 $conn->close();

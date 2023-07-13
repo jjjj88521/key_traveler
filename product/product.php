@@ -29,7 +29,7 @@ $product = $result->fetch_assoc();
 // 網頁標題
 $title = "商品 $product_id";
 
-include("../template/getCategory.php");
+include("./include/getCategory.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -41,7 +41,7 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                             <div>
 
                             </div>
-                            <table id="datatablesSimple">
+                            <table id="datatablesSimple" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>id</th>
@@ -84,13 +84,13 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                                             <td><?= $product["quantity"] ?></td>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <a href="product.php?mode=info&id=<?= $product["id"] ?>" title="詳細資訊" class="btn btn-link px-1">
+                                                    <a href="product.php?mode=info&id=<?= $product["id"] ?>" title="詳細資訊" class="btn btn-link p-1">
                                                         <i class="fa-solid fa-circle-info"></i>
                                                     </a>
-                                                    <a href="product.php?mode=edit&id=<?= $product["id"] ?>" title="編輯" class="btn btn-link px-1">
+                                                    <a href="product.php?mode=edit&id=<?= $product["id"] ?>" title="編輯" class="btn btn-link p-1">
                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                     </a>
-                                                    <button title="刪除" type="button" data-bs-toggle="modal" data-bs-target="#infoModal<?= $product["id"] ?>" class="btn btn-link px-1 deleteBtn">
+                                                    <button title="刪除" type="button" data-bs-toggle="modal" data-bs-target="#infoModal<?= $product["id"] ?>" class="btn btn-link p-1 deleteBtn">
                                                         <i class="fa-solid fa-trash text-danger"></i>
                                                     </button>
                                                 </div>
