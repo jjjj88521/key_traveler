@@ -71,7 +71,7 @@ include("./include/getCategory.php");
                             商品管理
                         </li>
                         <li class="breadcrumb-item">
-                            商品列表
+                            <a href="product-list.php" class="link-dark">商品列表</a>
                         </li>
                         <li class="breadcrumb-item active">商品
                             <?= $product_id ?>

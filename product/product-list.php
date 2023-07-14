@@ -31,16 +31,19 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                 <div class="container-fluid px-4">
                     <h1 class="mt-4"><?= $title ?></h1>
                     <!-- breadcrumb -->
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item">商品管理</li>
-                        <li class="breadcrumb-item active"><?= $title ?></li>
-                    </ol>
+                    <div class="d-flex justify-content-between">
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item">商品管理</li>
+                            <li class="breadcrumb-item active"><?= $title ?></li>
+                        </ol>
+                        <div>
+                            <a href="product-create.php" class="btn btn-info">新增</a>
+                        </div>
+                    </div>
+
                     <div class="card mb-4">
                         <!-- 表格放卡片裡面 -->
                         <div class="card-body">
-                            <div>
-
-                            </div>
                             <table id="datatablesSimple" class="table table-bordered">
                                 <thead>
                                     <tr>

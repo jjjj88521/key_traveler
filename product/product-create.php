@@ -5,6 +5,9 @@ $title = "新增商品";
 require_once("../db_connect.php");
 
 include("./include/getCategory.php");
+
+// 取得已有的品牌 讓使用者能選擇
+$sqlBrand = "SELECT brand FROM ";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +30,7 @@ include("./include/getCategory.php");
                             商品管理
                         </li>
                         <li class="breadcrumb-item">
-                            商品列表
+                            <a href="product-list.php" class="link-dark">商品列表</a>
                         </li>
                         <li class="breadcrumb-item active">
                             新增商品
