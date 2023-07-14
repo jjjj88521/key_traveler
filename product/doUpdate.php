@@ -33,6 +33,9 @@ $sql = "UPDATE product
         SET name='$name', brand='$brand', price='$price', description='$description', quantity='$quantity', valid='$valid', category_1 = '$cate_1', category_2 = '$cate_2', is_groupBuy = '$is_groupBuy'
         WHERE id=$id";
 if ($conn->query($sql) === TRUE) {
+    // 選團購，新增或編輯團購資訊
+    if ($is_groupBuy == 1) {
+    }
     header("location: product.php?mode=info&id=" . $id);
 } else {
     echo "資料修改錯誤: " . $conn->error;
