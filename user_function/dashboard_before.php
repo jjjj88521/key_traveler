@@ -5,17 +5,29 @@ require_once("db_connect_small_project.php");
 //分頁功能
 $page = $_GET["page"] ?? 1;
 $startItem = ($page - 1) * 10;
-//查詢停權名單資料庫
-$sqlStop = "SELECT * FROM users WHERE valid=0 LIMIT $startItem,10";
-$resultStop = $conn->query($sqlStop);
-$rowsStop = $resultStop->fetch_all(MYSQLI_ASSOC);
+//修改功能連結
+
+//查詢會員資料庫
+$sql = "SELECT * FROM users WHERE valid=1 LIMIT $startItem,10 "; //LIMIT $startItem,10  <----加上自己的頁籤功能記得要加這個
+$result = $conn->query($sql);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
 
 //計算總頁數
-$sqlPages = "SELECT * FROM users WHERE valid=0 ";
+$sqlPages = "SELECT * FROM users WHERE valid=1";
 $resultTotalPages = $conn->query($sqlPages);
 $totalPages = $resultTotalPages->num_rows;
-$pages = ceil($totalPages / 10) //計算總共有幾頁
+$pages = ceil($totalPages / 10); //計算總共有幾頁
+
+//搜尋功能
+// $searchValue = $_GET['search'];
+// if (isset($searchValue)) {
+//     $searchResult = "SELECT * FROM users WHERE valid=1 AND( account LIKE '%$searchValue%' OR id LIKE '%$searchValue%' OR password LIKE'%$searchValue%' OR email LIKE '%$searchValue%') LIMIT $startItem,10";
+//     $result = $conn->query($searchResult);
+//     $rows = $result->fetch_all(MYSQLI_ASSOC);
+// }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +72,7 @@ $pages = ceil($totalPages / 10) //計算總共有幾頁
             </li>
         </ul> -->
         <div class="text-end w-100 pe-3">
-            <img style="width:100px;" src="/small_project/images/Keyboard-Traveler/橫字白.svg" alt="">
+            <img style="width:100px;" src="橫字白.svg" alt="">
         </div>
     </nav>
     <div id="layoutSidenav">
@@ -68,17 +80,26 @@ $pages = ceil($totalPages / 10) //計算總共有幾頁
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <!-- <div class="sb-sidenav-menu-heading"></div> -->
-                        <a class="nav-link" href="dashboard.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            會員中心
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false" aria-controls="users">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-columns"></i>
+                            </div>
+                            會員管理
+                            <div class="sb-sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
                         </a>
-
+                        <div class="collapse" id="users" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="/key_traveler/user_function/dashboard.php">會員資料列表</a>
+                                <a class="nav-link" href="/key_traveler/user_function/stopuser.php">停權會員名單</a>
+                            </nav>
+                        </div>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Start Bootstrap
+                    Admin
                 </div>
             </nav>
         </div>
@@ -86,14 +107,23 @@ $pages = ceil($totalPages / 10) //計算總共有幾頁
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">會員中心 </h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">共計:<?= $totalPages; ?> 筆</li>
-                    </ol>
-                    <!-- 停權名單 -->
-                    <div class="stopUser card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            停權會員資料列表
+                    <div class="d-flex justify-content-between align-content-center py-1">
+                        <ol class="breadcrumb ">
+                            <!-- <li class="breadcrumb-item active">共計:<?= $totalPages; ?> 筆</li> -->
+                        </ol>
+                        <form action="dashboardSearch.php" method='get'>
+                            <input type="text" name="search">
+                            <button class="btn btn-dark" type="submit">搜尋</button>
+                        </form>
+                    </div>
+
+                    <!-- 會員資料 -->
+                    <div class="user card mb-4">
+
+                        <div class="card-header d-flex align-item-center">
+                            <i class="fas fa-table me-1 pt-1 pe-2"></i>
+                            <p class="my-0 pe-2">會員資料列表</p>
+                            <p class="breadcrumb-item active my-0">共計:<?= $totalPages; ?> 筆</p>
                         </div>
                         <div class="card-body">
                             <!------------------------------------------------  輸入表格--------------------------------------------------------------->
@@ -110,15 +140,16 @@ $pages = ceil($totalPages / 10) //計算總共有幾頁
                                 </thead>
 
                                 <tbody>
-                                    <?php foreach ($rowsStop as $usersStop) :; ?>
+                                    <?php foreach ($rows as $users) :; ?>
                                         <tr>
-                                            <td><?= $usersStop["id"]  ?></td>
-                                            <td><?= $usersStop["account"]  ?></td>
-                                            <td><?= $usersStop["password"]  ?></td>
-                                            <td><?= $usersStop["email"]  ?></td>
+                                            <td><?= $users["id"]  ?></td>
+                                            <td><?= $users["account"]  ?></td>
+                                            <td><?= $users["password"]  ?></td>
+                                            <td><?= $users["email"]  ?></td>
                                             <td>
-                                                <a href="doRecover.php?id=<?= $usersStop["id"] ?>" class="btn btn-dark">Recover</a>
-                                                <a href="doDelete.php?id=<?= $usersStop["id"] ?>" class="btn btn-dark">刪除會員資料</a>
+                                                <a href="doRead.php?id=<?= $users["id"] ?>" class="btn btn-dark">Read</a>
+                                                <a href="updateUserUI.php?id=<?= $users["id"] ?>" class="btn btn-dark">Update</a>
+                                                <a href="doStop.php?id=<?= $users["id"] ?>" class="btn btn-dark">停權</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -127,23 +158,22 @@ $pages = ceil($totalPages / 10) //計算總共有幾頁
                             </table>
                         </div>
                     </div>
-                    <!-- 停權頁籤 -->
+                    <!-- 會員資料頁籤 -->
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link text-dark" href="stopuser.php?page=<?= $page - 1 ?>">Previous</a></li>
+                            <li class="page-item"><a class="page-link text-dark " href="dashboard.php?page=<?= $page - 1 ?>">Previous</a></li>
                             <?php for ($i = 1; $i <= $pages; $i++) : ?>
-                                <li class="page-item"><a class="page-link text-dark" href="stopuser.php?page=<?= $i ?>"><?= $i ?></a></li>
+                                <li class="page-item"><a class="page-link text-dark" href="dashboard.php?page=<?= $i ?>"><?= $i ?></a></li>
                             <?php endfor ?>
-                            <li class="page-item"><a class="page-link text-dark" href="stopuser.php?page=<?= $page + 1 ?>">Next</a></li>
+                            <li class="page-item"><a class="page-link text-dark" href="dashboard.php?page=<?= $page + 1 ?>">Next</a></li>
                         </ul>
                     </nav>
-
-
+                    <!--       以上頁籤         -->
                     <div class="operation py-3">
                         <h3>管理者操作面板</h3>
                         <div class="operation-content">
-                            <a href="/key_traveler/user_function/dashboard.php"><button class="btn btn-dark">回到會員資料</button></a>
-
+                            <a href="/key_traveler/user_function/register.php"><button class="btn btn-dark">新增</button></a>
+                            <a href="stopUser.php" class="btn btn-dark">停權名單</a>
                         </div>
 
                     </div>

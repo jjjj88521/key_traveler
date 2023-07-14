@@ -41,7 +41,7 @@ $titles = $title->fetch_all(MYSQLI_ASSOC);
 <body class="">
 
     <div class="container d-flex justify-content-center flex-column">
-        <a class="navbar-brand ps-3 bg-dark pb-3 rounded mt-3" href="dashboard.php"> <img class="w-25 d-block mx-auto mt-3" src="橫logo白.svg" alt=""></a>
+        <div class="w-100 bg-dark rounded py-3 mt-5"><a class="navbar-brand" href="index.html"> <img class="w-25 d-block mx-auto bg-dark " src="橫logo白.svg" alt=""></a></div>
         <div class="user_profile_box m-auto pt-5 w-100">
             <h1>資料如下:</h1>
             <div class="">

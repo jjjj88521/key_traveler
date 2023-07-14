@@ -21,7 +21,7 @@ $idA = $_GET["id"] - 1;
 </head>
 
 <body class="bg-secondary">
-    <a class="navbar-brand ps-3" href="dashboard.php"> <img class="w-25 d-block mx-auto mt-1 mb-0" src="橫logo白.svg" alt=""></a>
+    <a class="navbar-brand ps-3" href="index.html"> <img class="w-25 d-block mx-auto mt-1 mb-0" src="橫logo白.svg" alt=""></a>
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -42,21 +42,21 @@ $idA = $_GET["id"] - 1;
                                             <div class="col-md-12">
                                                 <h4 class="py-3">Account</h4>
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputAccount" name="account" type="text" placeholder="Enter your first name" value="<?= $rowsUser[$idA]['account'] ?>" />
+                                                    <input class="form-control" id="inputAccount" name="account" type="text" placeholder="Enter your first name" />
                                                     <label for="inputAccount">Account</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <h4 class="py-3">Password</h4>
                                                 <div class="form-floating">
-                                                    <input class="form-control" id="inputPassword" name="password" type="text" placeholder="Enter your last name" value="<?= $rowsUser[$idA]['password'] ?>" />
+                                                    <input class="form-control" id="inputPassword" name="password" type="text" placeholder="Enter your last name" />
                                                     <label for="inputPassword">Password</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <h4 class="py-3">Email</h4>
                                                 <div class="form-floating">
-                                                    <input class="form-control" id="inputEmail" name="email" type="text" placeholder="Enter your last name" value="<?= $rowsUser[$idA]['email'] ?>" />
+                                                    <input class="form-control" id="inputEmail" name="email" type="text" placeholder="Enter your last name" />
                                                     <label for="inputEmail">Email</label>
                                                 </div>
                                             </div>

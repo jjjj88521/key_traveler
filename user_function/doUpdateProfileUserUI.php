@@ -34,47 +34,24 @@ $conn->query($all);
 
 </head>
 
-<body class="">
+<body>
 
     <div class="container d-flex justify-content-center flex-column">
-        <a class="navbar-brand ps-3 bg-dark pb-3 rounded mt-3" href="dashboard.php"> <img class="w-25 d-block mx-auto mt-3" src="橫logo白.svg" alt=""></a>
-        <div class="card-body">
-            <div class="small mb-3 text-muted mt-3">
-                <h5>更新資料完成，資料如下:</h5>
-            </div>
-            <div class="py-2 container">
-                <table class="table table-bordered table-striped border-5 ">
-                    <tr class="row">
-                        <td class="col">Last Name</td>
-                        <td class="col"><?= $lastName ?></td>
-                    </tr>
-                    <tr class="row">
-                        <td class="col">First Name</td>
-                        <td class="col"><?= $firstName ?></td>
-                    </tr>
-                    <tr class="row">
-                        <td class="col">Birthday</td>
-                        <td class="col"><?= $birthday ?></td>
-                    </tr>
-                    <tr class="row">
-                        <td class="col">Gender</td>
-                        <td class="col"><?= $gender == 1 ? "女" : "男"; ?></td>
-                    </tr>
-                    <tr class="row">
-                        <td class="col">Phone</td>
-                        <td class="col"><?= $phone ?></td>
-                    </tr>
-                    <tr class="row">
-                        <td class="col">Address</td>
-                        <td class="col"><?= $address ?></td>
-                    </tr>
 
-                </table>
+        <div class="user_profile_box m-auto pt-5">
+            <h1>更新資料完成，資料如下:</h1>
+            <div class="border p-3 border-primary border-3 rounded">
+                <h3>last Name:<?= $lastName ?></h3>
+                <h3>First Name:<?= $firstName ?></h3>
+                <h3>gender:<?= $gender == 1 ? "女" : "男"; ?></h3>
+                <h3>birthday:<?= $birthday ?></h3>
+                <h3>phone:<?= $phone ?></h3>
+                <h3>address:<?= $address ?></h3>
             </div>
         </div>
-        <div class="card-footer text-center py-3">
-            <div class="small"><a href="dashboard.php" class="text-dark">Go to dashboard</a></div>
-        </div>
+
+
+
     </div>
 
 
