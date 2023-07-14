@@ -8,6 +8,7 @@ $product_id = $_GET["id"];
 // 編輯模式 or 資訊模式
 $mode = $_GET["mode"];
 
+// input欄位是否readonly
 if ($mode == "info") {
     $readonly = "disabled readonly";
 } elseif ($mode == "edit") {
@@ -25,6 +26,14 @@ $sql = "SELECT product.*, category_1.name AS c1_name, category_2.name AS c2_name
         WHERE product.id = $product_id";
 $result = $conn->query($sql);
 $product = $result->fetch_assoc();
+
+// 團購資訊
+$sqlGroupBuy = "SELECT * FROM group_buy WHERE product_id = $product_id";
+$resultGroupBuy = $conn->query($sqlGroupBuy);
+$groupBuy = $resultGroupBuy->fetch_assoc();
+
+// 上下架狀態
+$valid = $product["valid"] ? "checked" : "";
 
 // 網頁標題
 $title = "商品 $product_id";
@@ -64,7 +73,7 @@ include("./include/getCategory.php");
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">商品 <?= $product_id ?> 詳細資訊
+                    <h1 class="mt-4">商品 <?= $product_id ?> <?= $mode == "edit" ? "編輯" : "詳細資訊" ?>
                     </h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item">
@@ -88,19 +97,19 @@ include("./include/getCategory.php");
                                 <input type="hidden" name="id" value="<?= $product["id"] ?>">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th>商品名稱</th>
+                                        <th class="w-25">商品名稱</th>
                                         <td>
                                             <input type="text" value="<?= $product["name"] ?>" name="name" class="form-control" <?= $readonly ?>>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>品牌</th>
+                                        <th class="w-25">品牌</th>
                                         <td>
                                             <input type="text" value="<?= $product["brand"] ?>" name="brand" class="form-control" <?= $readonly ?>>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>商品類別</th>
+                                        <th class="w-25">商品類別</th>
                                         <td class="d-flex align-items-center">
                                             <select name="category_1" id="category_1" class="form-control text-center w-25" <?= $readonly ?>>
                                                 <?php foreach ($allCate as $cate) : ?>
@@ -116,35 +125,55 @@ include("./include/getCategory.php");
                                                                                         echo "selected"; ?>><?= $cate ?></option>
                                                 <?php endforeach; ?>
                                             </select>
-
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>商品價格</th>
+                                        <th class="w-25">商品型態</th>
+                                        <td>
+                                            <input type="checkbox" name="is_groupBuy" data-toggle="toggle" data-onlabel="團購商品" data-offlabel="一般商品" data-onstyle="primary" data-offstyle="secondary" id="groupBuyCheck" <?= $readonly ?> <?= $product["is_groupBuy"] ? "checked" : "" ?>>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25">商品價格</th>
                                         <td>
                                             <input type="number" value="<?= $product["price"] ?>" name="price" min="0" class="form-control" <?= $readonly ?>>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>商品庫存</th>
+                                        <th class="w-25">商品庫存</th>
                                         <td>
                                             <input type="number" value="<?= $product["quantity"] ?>" name="quantity" min="0" class="form-control" <?= $readonly ?>>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>商品描述</th>
+                                        <th class="w-25">商品描述</th>
                                         <td>
                                             <textarea name="description" cols="30" rows="10" class="form-control" style="resize: none" <?= $readonly ?>><?= $product["description"] ?></textarea>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>上下架狀態</th>
+                                        <th class="w-25">上下架狀態</th>
                                         <td>
-                                            <?php if ($product["valid"] == 1) : ?>
-                                                <input type="checkbox" name="valid" checked data-toggle="toggle" data-onlabel="上架" data-offlabel="下架" data-onstyle="success" data-offstyle="danger" <?= $readonly ?>>
-                                            <?php elseif ($product["valid"] == -1) : ?>
-                                                <input type="checkbox" name="valid" data-toggle="toggle" data-onlabel="上架" data-offlabel="下架" data-onstyle="success" data-offstyle="danger" <?= $readonly ?>>
-                                            <?php endif; ?>
+
+                                            <input type="checkbox" name="valid" data-toggle="toggle" data-onlabel="上架" data-offlabel="下架" data-onstyle="success" data-offstyle="danger" <?= $readonly ?> <?= $valid ?>>
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="groupBuyForm" style="display: none">
+                                        <th class="w-25">團購時間</th>
+                                        <td class="d-flex align-items-center">
+                                            <input type="date" class="form-control" name="start" value="<?= $groupBuy["start"] ?>" <?= $readonly ?>>
+                                            <span class="px-3">~</span>
+                                            <input type="date" class="form-control" name="end" value="<?= $groupBuy["end"] ?>" <?= $readonly ?>>
+                                        </td>
+                                    </tr>
+                                    <tr class="groupBuyForm" style="display: none">
+                                        <th class="w-25">開團人數（現在/目標）</th>
+                                        <td class="d-flex align-items-center">
+                                            <input type="number" class="form-control w-25" value="<?= $groupBuy["current_people"] ?>" disabled readonly>
+                                            <span class="px-3">/</span>
+                                            <input type="number" name="target_people" class="form-control w-25" value="<?= $groupBuy["target_people"] ?>" <?= $readonly ?>>
                                         </td>
                                     </tr>
                                 </table>
@@ -163,7 +192,6 @@ include("./include/getCategory.php");
                                     <?php endif; ?>
                                 </div>
                             </div>
-
                         </div>
                     </form>
                 </div>
@@ -172,9 +200,7 @@ include("./include/getCategory.php");
             <?php include("../template/footer.php") ?>
         </div>
     </div>
-    <script src="../js/scripts.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <?php include("../template/footerJs.php") ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/js/bootstrap5-toggle.ecmas.min.js"></script>
 
     <script src="../js/datatables-simple-demo.js"></script>
@@ -189,6 +215,27 @@ include("./include/getCategory.php");
             allCate[category1.selectedIndex].cate2.forEach(item => {
                 category2.innerHTML += `<option value='${item}' name='category_2'>${item}</option>`;
             });
+        })
+
+        function groupBuyDisplay(check) {
+            if (check.checked) {
+                groupBuyForm.forEach(item => {
+                    item.style.display = "table-row";
+                })
+            } else {
+                groupBuyForm.forEach(item => {
+                    item.style.display = "none";
+                })
+            }
+        }
+
+
+        // 若選取團購，則顯示團購需要輸入的資訊
+        const groupBuyCheck = document.querySelector("#groupBuyCheck");
+        const groupBuyForm = document.querySelectorAll(".groupBuyForm");
+        groupBuyDisplay(groupBuyCheck);
+        groupBuyCheck.addEventListener("change", function(e) {
+            groupBuyDisplay(e.target);
         })
     </script>
 </body>

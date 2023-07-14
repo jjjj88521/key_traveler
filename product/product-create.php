@@ -175,7 +175,6 @@ $sqlBrand = "SELECT brand FROM ";
                     item.style.display = "none";
                 })
             }
-
         })
     </script>
 </body>

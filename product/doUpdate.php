@@ -12,6 +12,7 @@ $description = $_POST["description"];
 $cate_1 = $_POST["category_1"];
 $cate_2 = $_POST["category_2"];
 $quantity = $_POST["quantity"];
+$is_groupBuy = isset($_POST["is_groupBuy"]) ? 1 : 0;
 $valid = isset($_POST["valid"]) ? 1 : -1;
 
 // 取得類別
@@ -29,7 +30,7 @@ $cate_2 = $resultCate2->fetch_assoc()["c2_id"];
 
 // 修改商品資訊
 $sql = "UPDATE product
-        SET name='$name', brand='$brand', price='$price', description='$description', quantity='$quantity', valid='$valid', category_1 = '$cate_1', category_2 = '$cate_2'
+        SET name='$name', brand='$brand', price='$price', description='$description', quantity='$quantity', valid='$valid', category_1 = '$cate_1', category_2 = '$cate_2', is_groupBuy = '$is_groupBuy'
         WHERE id=$id";
 if ($conn->query($sql) === TRUE) {
     header("location: product.php?mode=info&id=" . $id);
