@@ -7,24 +7,26 @@ $page = $_GET["page"] ?? 1;
 $startItem = ($page - 1) * 10;
 //修改功能連結
 
-//查詢會員資料庫
-$sql = "SELECT * FROM users WHERE valid=1 LIMIT $startItem,10 "; //LIMIT $startItem,10  <----加上自己的頁籤功能記得要加這個
-$result = $conn->query($sql);
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+// //查詢會員資料庫
+// $sql = "SELECT * FROM users WHERE valid=1 LIMIT $startItem,10 "; //LIMIT $startItem,10  <----加上自己的頁籤功能記得要加這個
+// $result = $conn->query($sql);
+// $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-//計算總頁數
-$sqlPages = "SELECT * FROM users WHERE valid=1";
-$resultTotalPages = $conn->query($sqlPages);
-$totalPages = $resultTotalPages->num_rows;
-$pages = ceil($totalPages / 10); //計算總共有幾頁
+
 
 //搜尋功能
-// $searchValue = $_GET['search'];
-// if (isset($searchValue)) {
-//     $searchResult = "SELECT * FROM users WHERE valid=1 AND( account LIKE '%$searchValue%' OR id LIKE '%$searchValue%' OR password LIKE'%$searchValue%' OR email LIKE '%$searchValue%') LIMIT $startItem,10";
-//     $result = $conn->query($searchResult);
-//     $rows = $result->fetch_all(MYSQLI_ASSOC);
-// }
+$searchValue = $_GET['search'];
+if (isset($searchValue)) {
+    $searchResult = "SELECT * FROM users WHERE valid=1 AND( account LIKE '%$searchValue%' OR id LIKE '%$searchValue%' OR password LIKE'%$searchValue%' OR email LIKE '%$searchValue%') ";
+    $result = $conn->query($searchResult);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+}
+
+//計算總頁數
+// $sqlPages = "SELECT * FROM users WHERE valid=1";
+$resultTotalPages = $conn->query($searchResult);
+$totalPages = $resultTotalPages->num_rows;
+$pages = ceil($totalPages / 10); //計算總共有幾頁
 ?>
 
 
@@ -126,7 +128,7 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                         <div class="card-body">
                             <!------------------------------------------------  輸入表格--------------------------------------------------------------->
                             <!-- id="datatablesSimple" 大絕 -->
-                            <table class="table">
+                            <table class="table" id="datatablesSimple">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
@@ -157,7 +159,7 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                         </div>
                     </div>
                     <!-- 會員資料頁籤 -->
-                    <nav aria-label="Page navigation example">
+                    <!-- <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item"><a class="page-link text-dark " href="dashboard.php?page=<?= $page - 1 ?>">Previous</a></li>
                             <?php for ($i = 1; $i <= $pages; $i++) : ?>
@@ -165,7 +167,7 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                             <?php endfor ?>
                             <li class="page-item"><a class="page-link text-dark" href="dashboard.php?page=<?= $page + 1 ?>">Next</a></li>
                         </ul>
-                    </nav>
+                    </nav> -->
                     <!--       以上頁籤         -->
                     <div class="operation py-3">
                         <h3>管理者操作面板</h3>
