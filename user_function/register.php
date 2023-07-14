@@ -13,7 +13,7 @@
 </head>
 
 <body class="bg-secondary">
-    <a class="navbar-brand ps-3" href="index.html"> <img class="w-25 d-block mx-auto mt-3" src="橫logo白.svg" alt=""></a>
+    <a class="navbar-brand ps-3" href="dashboard.php"> <img class="w-25 d-block mx-auto mt-3" src="橫logo白.svg" alt=""></a>
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>

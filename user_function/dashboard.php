@@ -47,7 +47,7 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html"> <img class="w-75" src="橫logo白.svg" alt=""></a>
+        <a class="navbar-brand ps-3" href="dashboard.php"> <img class="w-75" src="橫logo白.svg" alt=""></a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
@@ -106,14 +106,15 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">會員中心 </h1>
+                    <h1 class="mt-4">會員資料列表 </h1>
                     <div class="d-flex justify-content-between align-content-center py-1">
                         <ol class="breadcrumb ">
                             <li class="breadcrumb-item active">共計:<?= $totalPages; ?> 筆</li>
                         </ol>
                         <form action="dashboardSearch.php" method='get'>
                             <input type="text" name="search">
-                            <button class="btn btn-dark" type="submit">搜尋</button>
+                            <button class="btn btn-dark" type="submit" name='valid' value='1'>搜尋</button>
+                            <!-- 搜尋列在這---------- -->
                         </form>
                     </div>
 
@@ -184,9 +185,9 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Key Traveler Website 2023</div>
                         <div>
-                            <a href="#">Privacy Policy</a>
+                            <a href="#" class="text-muted">Privacy Policy</a>
                             &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                            <a href="#" class="text-muted">Terms &amp; Conditions</a>
                         </div>
                     </div>
                 </div>

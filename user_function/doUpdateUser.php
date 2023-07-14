@@ -25,22 +25,35 @@ $conn->query("UPDATE `users` SET `account`='$account',`password`='$password',`em
 
 </head>
 
-<body class="bg-secondary">
+<body class="">
 
     <div class="container d-flex justify-content-center flex-column">
-        <a class="navbar-brand ps-3" href="index.html"> <img class="w-25 d-block mx-auto mt-3" src="橫logo白.svg" alt=""></a>
-        <div class="user_profile_box m-auto pt-5">
-            <h1>更新資料完成，資料如下:</h1>
-            <div class="border p-3 border-body border-3 rounded">
-                <h3>Account:<?= $account ?></h3>
-                <h3>Password:<?= $password ?></h3>
-                <h3>Email:<?= $email ?></h3>
+        <a class="navbar-brand ps-3 bg-dark pb-3 rounded mt-3" href="dashboard.php"> <img class="w-25 d-block mx-auto mt-3" src="橫logo白.svg" alt=""></a>
+        <div class="card-body">
+            <div class="small mb-3 text-muted mt-3">
+                <h5>更新資料完成，資料如下:</h5>
+            </div>
+            <div class="py-2 container">
+                <table class="table table-bordered table-striped border-5  col-8">
+                    <tr class="row">
+                        <td class="col">Account</td>
+                        <td class="col"><?= $account ?></td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col">Password</td>
+                        <td class="col"><?= $password ?></td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col">Email</td>
+                        <td class="col"><?= $email ?></td>
+                    </tr>
+
+                </table>
             </div>
         </div>
 
-
         <div class="card-footer text-center py-3">
-            <div class="small"><a href="dashboard.php" class="text-light">Go to dashboard</a></div>
+            <div class="small"><a href="dashboard.php" class="text-dark">Go to dashboard</a></div>
         </div>
     </div>
 

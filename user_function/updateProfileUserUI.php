@@ -15,13 +15,13 @@ $idA = $_GET["id"] - 1;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Register - SB Admin</title>
+    <title>updateProfileUserUI - SB Admin</title>
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-secondary">
-    <a class="navbar-brand ps-3" href="index.html"> <img class="w-25 d-block mx-auto mt-3" src="橫logo白.svg" alt=""></a>
+    <a class="navbar-brand ps-3" href="dashboard.php"> <img class="w-25 d-block mx-auto mt-3" src="橫logo白.svg" alt=""></a>
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -46,14 +46,14 @@ $idA = $_GET["id"] - 1;
                                             <div class="col-md-12">
                                                 <h4 class="py-3">Last name</h4>
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputLastName" name="lastName" type="text" placeholder="Enter your first name" />
+                                                    <input class="form-control" id="inputLastName" name="lastName" type="text" placeholder="Enter your first name" value="<?= $rowsUserProfile[$idA]["last_name"] ?>" />
                                                     <label class="text-secondary" for="inputLastName"><?= $rowsUserProfile[$idA]["last_name"] ?></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <h4 class="py-3">First name</h4>
                                                 <div class="form-floating">
-                                                    <input class="form-control" id="inputFirstName" name="firstName" type="text" placeholder="Enter your last name" />
+                                                    <input class="form-control" id="inputFirstName" name="firstName" type="text" placeholder="Enter your last name" value="<?= $rowsUserProfile[$idA]["first_name"] ?>" />
                                                     <label class="text-secondary" for="inputFirstName"><?= $rowsUserProfile[$idA]["first_name"] ?></label>
                                                 </div>
                                             </div>
@@ -71,21 +71,21 @@ $idA = $_GET["id"] - 1;
                                         <div class="col-md-12">
                                             <h4 class="py-3">Birthday</h4>
                                             <div class="form-floating">
-                                                <input class="form-control" id="inputBirthday" name="birthday" type="text" placeholder="Enter your last name" />
+                                                <input class="form-control" id="inputBirthday" name="birthday" type="text" placeholder="Enter your last name" value="<?= $rowsUserProfile[$idA]["birthday"] ?>" />
                                                 <label class="text-secondary" for="inputBirthday"><?= $rowsUserProfile[$idA]["birthday"] ?></label>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <h4 class="py-3">Phone</h4>
                                             <div class="form-floating">
-                                                <input class="form-control" id="inputPhone" name="phone" type="text" placeholder="Enter your last name" />
+                                                <input class="form-control" id="inputPhone" name="phone" type="text" placeholder="Enter your last name" value="<?= $rowsUserProfile[$idA]["phone"] ?>" />
                                                 <label class="text-secondary" for="inputPhone"><?= $rowsUserProfile[$idA]["phone"] ?></label>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <h4 class="py-3">Address</h4>
                                             <div class="form-floating">
-                                                <input class="form-control" id="inputAddress" name="address" type="text" placeholder="Enter your last name" />
+                                                <input class="form-control" id="inputAddress" name="address" type="text" placeholder="Enter your last name" value="<?= $rowsUserProfile[$idA]["address"] ?>" />
                                                 <label class="text-secondary" for="inputAddress"><?= $rowsUserProfile[$idA]["address"] ?></label>
                                             </div>
                                         </div>

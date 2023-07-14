@@ -16,8 +16,9 @@ $startItem = ($page - 1) * 10;
 
 //搜尋功能
 $searchValue = $_GET['search'];
+$valid = $_GET['valid'];
 if (isset($searchValue)) {
-    $searchResult = "SELECT * FROM users WHERE valid=1 AND( account LIKE '%$searchValue%' OR id LIKE '%$searchValue%' OR password LIKE'%$searchValue%' OR email LIKE '%$searchValue%') ";
+    $searchResult = "SELECT * FROM users WHERE valid='$valid' AND( account LIKE '%$searchValue%' OR id LIKE '%$searchValue%' OR password LIKE'%$searchValue%' OR email LIKE '%$searchValue%') ";
     $result = $conn->query($searchResult);
     $rows = $result->fetch_all(MYSQLI_ASSOC);
 }
@@ -49,7 +50,7 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html"> <img class="w-75" src="橫logo白.svg" alt=""></a>
+        <a class="navbar-brand ps-3" href="dashboard.php"> <img class="w-75" src="橫logo白.svg" alt=""></a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
@@ -82,7 +83,7 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false" aria-controls="users">
+                        <a class="nav-link collapsed" href="dashboard.php" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false" aria-controls="users">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-columns"></i>
                             </div>
@@ -174,6 +175,7 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                         <div class="operation-content">
                             <a href="/key_traveler/user_function/register.php"><button class="btn btn-dark">新增</button></a>
                             <a href="stopUser.php" class="btn btn-dark">停權名單</a>
+                            <a href="dashboard.php" class="btn btn-dark">回到會員中心</a>
                         </div>
 
                     </div>
@@ -186,9 +188,9 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Key Traveler Website 2023</div>
                         <div>
-                            <a href="#">Privacy Policy</a>
+                            <a href="#" class="text-muted">Privacy Policy</a>
                             &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                            <a href="#" class="text-muted">Terms &amp; Conditions</a>
                         </div>
                     </div>
                 </div>

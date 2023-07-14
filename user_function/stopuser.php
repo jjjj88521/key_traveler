@@ -35,7 +35,7 @@ $pages = ceil($totalPages / 10) //計算總共有幾頁
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html"> <img class="w-75" src="橫logo白.svg" alt=""></a>
+        <a class="navbar-brand ps-3" href="dashboard.php"> <img class="w-75" src="橫logo白.svg" alt=""></a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
@@ -68,12 +68,21 @@ $pages = ceil($totalPages / 10) //計算總共有幾頁
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <!-- <div class="sb-sidenav-menu-heading"></div> -->
-                        <a class="nav-link" href="dashboard.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            會員中心
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false" aria-controls="users">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-columns"></i>
+                            </div>
+                            會員管理
+                            <div class="sb-sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
                         </a>
-
+                        <div class="collapse" id="users" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="/key_traveler/user_function/dashboard.php">會員資料列表</a>
+                                <a class="nav-link" href="/key_traveler/user_function/stopuser.php">停權會員名單</a>
+                            </nav>
+                        </div>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -85,10 +94,17 @@ $pages = ceil($totalPages / 10) //計算總共有幾頁
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">會員中心 </h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">共計:<?= $totalPages; ?> 筆</li>
-                    </ol>
+                    <h1 class="mt-4">停權會員列表 </h1>
+                    <div class="d-flex justify-content-between align-content-center py-1">
+                        <ol class="breadcrumb ">
+                            <li class="breadcrumb-item active">共計:<?= $totalPages; ?> 筆</li>
+                        </ol>
+                        <form action="dashboardSearch.php" method='get'>
+                            <input type="text" name="search">
+                            <button class="btn btn-dark" type="submit" name='valid' value="0">搜尋</button>
+                            <!-- 搜尋列在這---------- -->
+                        </form>
+                    </div>
                     <!-- 停權名單 -->
                     <div class="stopUser card mb-4">
                         <div class="card-header">
