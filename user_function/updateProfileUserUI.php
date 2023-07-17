@@ -46,14 +46,14 @@ $idA = $_GET["id"] - 1;
                                             <div class="col-md-12">
                                                 <h4 class="py-3">Last name</h4>
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputLastName" name="lastName" type="text" placeholder="Enter your first name" />
+                                                    <input class="form-control" id="inputLastName" name="lastName" type="text" value="<?= $rowsUserProfile[$idA]["last_name"] ?>" placeholder="Enter your first name" />
                                                     <label class="text-secondary" for="inputLastName"><?= $rowsUserProfile[$idA]["last_name"] ?></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <h4 class="py-3">First name</h4>
                                                 <div class="form-floating">
-                                                    <input class="form-control" id="inputFirstName" name="firstName" type="text" placeholder="Enter your last name" />
+                                                    <input class="form-control" id="inputFirstName" name="firstName" type="text" value="<?= $rowsUserProfile[$idA]["first_name"] ?>" placeholder="Enter your last name" />
                                                     <label class="text-secondary" for="inputFirstName"><?= $rowsUserProfile[$idA]["first_name"] ?></label>
                                                 </div>
                                             </div>
@@ -71,21 +71,21 @@ $idA = $_GET["id"] - 1;
                                         <div class="col-md-12">
                                             <h4 class="py-3">Birthday</h4>
                                             <div class="form-floating">
-                                                <input class="form-control" id="inputBirthday" name="birthday" type="text" placeholder="Enter your last name" />
+                                                <input class="form-control" id="inputBirthday" name="birthday" type="text" value="<?= $rowsUserProfile[$idA]["birthday"] ?>" placeholder="Enter your last name" />
                                                 <label class="text-secondary" for="inputBirthday"><?= $rowsUserProfile[$idA]["birthday"] ?></label>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <h4 class="py-3">Phone</h4>
                                             <div class="form-floating">
-                                                <input class="form-control" id="inputPhone" name="phone" type="text" placeholder="Enter your last name" />
+                                                <input class="form-control" id="inputPhone" name="phone" type="text" value="<?= $rowsUserProfile[$idA]["phone"] ?>" placeholder="Enter your last name" />
                                                 <label class="text-secondary" for="inputPhone"><?= $rowsUserProfile[$idA]["phone"] ?></label>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <h4 class="py-3">Address</h4>
                                             <div class="form-floating">
-                                                <input class="form-control" id="inputAddress" name="address" type="text" placeholder="Enter your last name" />
+                                                <input class="form-control" id="inputAddress" name="address" type="text" value="<?= $rowsUserProfile[$idA]["address"] ?>" placeholder="Enter your last name" />
                                                 <label class="text-secondary" for="inputAddress"><?= $rowsUserProfile[$idA]["address"] ?></label>
                                             </div>
                                         </div>
