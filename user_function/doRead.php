@@ -54,7 +54,7 @@ $titles = $titleWeb->fetch_all(MYSQLI_ASSOC);
                     </ol>
                     <div class="card mb-4">
                         <!-- 表格放卡片裡面 -->
-                        <div class="card-body">
+                        <div class="card-body ">
                             <table class="table table-bordered  table-striped border-5  border-secondary rounded">
                                 <tr class="row">
                                     <td class="col">Account</td>

@@ -112,11 +112,11 @@ $title = "停權名單";
                                 <!-- 停權頁籤 -->
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
-                                        <li class="page-item"><a class="page-link text-dark" href="stopuser.php?page=<?= $page - 1 ?>">Previous</a></li>
+                                        <li class="page-item"><a class="page-link text-dark" href="stopuser.php?page=<?= $page - 1 == 0 ? $page = 1 : $page - 1   ?>">Previous</a></li>
                                         <?php for ($i = 1; $i <= $pages; $i++) : ?>
                                             <li class="page-item"><a class="page-link text-dark" href="stopuser.php?page=<?= $i ?>"><?= $i ?></a></li>
                                         <?php endfor ?>
-                                        <li class="page-item"><a class="page-link text-dark" href="stopuser.php?page=<?= $page + 1 ?>">Next</a></li>
+                                        <li class="page-item"><a class="page-link text-dark" href="stopuser.php?page=<?= $page + 1 <= $pages ? $page + 1 : $page ?>">Next</a></li>
                                     </ul>
                                 </nav>
 
