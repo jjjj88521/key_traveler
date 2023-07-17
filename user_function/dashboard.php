@@ -2,7 +2,7 @@
 // ===== 要使用模板，記得注意路徑，否則抓不到template裡面的檔案 =====
 // ===== 把模板複製到你的資料夾，然後修改裡面的內容就能用了 =====
 // 網頁 title
-$title = "會員中心";
+$title = "會員列表";
 
 require_once("db_connect_small_project.php");
 
@@ -44,7 +44,7 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                     <ol class="breadcrumb mb-4">
                         <!-- 你有幾層就複製幾個 -->
                         <li class="breadcrumb-item">會員管理</li>
-                        <li class="breadcrumb-item active">會員管理</li>
+                        <li class="breadcrumb-item active">會員列表</li>
                     </ol>
                     <div class="card mb-4">
                         <!-- 表格放卡片裡面 -->
@@ -113,8 +113,9 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                             <a href="/key_traveler/user_function/register.php"><button class="btn btn-dark">新增</button></a>
                             <a href="stopUser.php" class="btn btn-dark">停權名單</a>
                         </div>
-
+                        <a href="" class="text-mute">新增_後端表單驗證(測試用) </a>
                     </div>
+
                 </div>
             </main>
             <!-- footer -->

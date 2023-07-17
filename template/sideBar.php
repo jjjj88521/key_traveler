@@ -17,6 +17,10 @@
                         <a class="nav-link" href="../user_function/dashboard.php">會員列表</a>
 
                     </nav>
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="../user_function/stopuser.php">停權名單</a>
+
+                    </nav>
                 </div>
                 <!-- =====商品管理===== -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#order" aria-expanded="false" aria-controls="order">
