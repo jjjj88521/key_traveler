@@ -44,9 +44,7 @@ $title = "停權名單";
                         <li class="breadcrumb-item">會員管理</li>
                         <li class="breadcrumb-item active">停權名單</li>
                     </ol>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">共計:<?= $totalPages; ?> 筆</li>
-                    </ol>
+
                     <div class="card mb-4">
                         <!-- 表格放卡片裡面 -->
 
@@ -55,10 +53,13 @@ $title = "停權名單";
                             <div class="container-fluid px-4">
                                 <!-- 停權名單 -->
                                 <div class="stopUser card mb-4">
-                                    <div class="card-header">
+                                    <div class="card-header d-flex align-items-center">
                                         <i class="fas fa-table me-1"></i>
-                                        停權會員資料列表
+                                        <p class="my-0 pe-2">停權會員資料列表</p>
+                                        <p class="breadcrumb-item active my-0">共計:<?= $totalPages; ?> 筆</p>
+
                                     </div>
+
                                     <div class="card-body">
                                         <!------------------------------------------------  輸入表格--------------------------------------------------------------->
                                         <!-- id="datatablesSimple" 大絕 -->
