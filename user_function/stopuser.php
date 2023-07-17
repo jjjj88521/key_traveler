@@ -69,6 +69,7 @@ $title = "停權名單";
                                                     <th>Account</th>
                                                     <th>Password</th>
                                                     <th>Email</th>
+                                                    <th>VIP</th>
                                                     <th>operation</th>
                                                 </tr>
                                             </thead>
@@ -80,6 +81,22 @@ $title = "停權名單";
                                                         <td><?= $usersStop["account"]  ?></td>
                                                         <td><?= $usersStop["password"]  ?></td>
                                                         <td><?= $usersStop["email"]  ?></td>
+                                                        <td><?php
+                                                            if ($usersStop["vip"] == 0) {
+                                                                echo "普通會員";
+                                                                echo "<img src='user0.svg' style='width:30px;' class='ms-2' alt=''>";
+                                                            } elseif ($usersStop["vip"] == 1) {
+                                                                echo "銀會員";
+                                                                echo "<img src='user1.svg' style='width:30px;' class='ms-2' alt=''>";
+                                                            } elseif ($usersStop["vip"] == 2) {
+                                                                echo "金會員";
+                                                                echo "<img src='user2.svg' style='width:30px;' class='ms-2' alt=''>";
+                                                            } else {
+                                                                echo "怪東西";
+                                                            }
+                                                            ?>
+                                                            <!-- <img src="" alt=""> -->
+                                                        </td>
                                                         <td>
                                                             <a href="doRecover.php?id=<?= $usersStop["id"] ?>" class="btn btn-dark">Recover</a>
                                                             <a href="doDelete.php?id=<?= $usersStop["id"] ?>" class="btn btn-dark">刪除會員資料</a>

@@ -76,6 +76,7 @@ $title = "搜尋結果:$searchValue";
                                         <th>Account</th>
                                         <th>Password</th>
                                         <th>Email</th>
+                                        <th>VIP</th>
                                         <th>operation</th>
                                     </tr>
                                 </thead>
@@ -87,6 +88,22 @@ $title = "搜尋結果:$searchValue";
                                             <td><?= $users["account"]  ?></td>
                                             <td><?= $users["password"]  ?></td>
                                             <td><?= $users["email"]  ?></td>
+                                            <td><?php
+                                                if ($users["vip"] == 0) {
+                                                    echo "普通會員";
+                                                    echo "<img src='user0.svg' style='width:30px;' class='ms-2' alt=''>";
+                                                } elseif ($users["vip"] == 1) {
+                                                    echo "銀會員";
+                                                    echo "<img src='user1.svg' style='width:30px;' class='ms-2' alt=''>";
+                                                } elseif ($users["vip"] == 2) {
+                                                    echo "金會員";
+                                                    echo "<img src='user2.svg' style='width:30px;' class='ms-2' alt=''>";
+                                                } else {
+                                                    echo "怪東西";
+                                                }
+                                                ?>
+                                                <!-- <img src="" alt=""> -->
+                                            </td>
                                             <td>
                                                 <a href="doRead.php?id=<?= $users["id"] ?>" class="btn btn-dark">Read</a>
                                                 <a href="updateUserUI.php?id=<?= $users["id"] ?>" class="btn btn-dark">Update</a>

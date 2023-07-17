@@ -72,6 +72,7 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                                         <th>Account</th>
                                         <th>Password</th>
                                         <th>Email</th>
+                                        <th>VIP</th>
                                         <th>Operation</th>
                                     </tr>
                                 </thead>
@@ -83,6 +84,22 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                                             <td><?= $users["account"]  ?></td>
                                             <td><?= $users["password"]  ?></td>
                                             <td><?= $users["email"]  ?></td>
+                                            <td><?php
+                                                if ($users["vip"] == 0) {
+                                                    echo "普通會員";
+                                                    echo "<img src='user0.svg' style='width:30px;' class='ms-2' alt=''>";
+                                                } elseif ($users["vip"] == 1) {
+                                                    echo "銀會員";
+                                                    echo "<img src='user1.svg' style='width:30px;' class='ms-2' alt=''>";
+                                                } elseif ($users["vip"] == 2) {
+                                                    echo "金會員";
+                                                    echo "<img src='user2.svg' style='width:30px;' class='ms-2' alt=''>";
+                                                } else {
+                                                    echo "怪東西";
+                                                }
+                                                ?>
+                                                <!-- <img src="" alt=""> -->
+                                            </td>
                                             <td>
                                                 <a href="doRead.php?id=<?= $users["id"] ?>" class="btn btn-dark">Read</a>
                                                 <a href="updateUserUI.php?id=<?= $users["id"] ?>" class="btn btn-dark">Update</a>
@@ -113,7 +130,7 @@ $pages = ceil($totalPages / 10); //計算總共有幾頁
                             <a href="/key_traveler/user_function/register.php"><button class="btn btn-dark">新增</button></a>
                             <a href="stopUser.php" class="btn btn-dark">停權名單</a>
                         </div>
-                        <a href="" class="text-mute">新增_後端表單驗證(測試用) </a>
+                        <a href="register_back-end-test.php" class="text-light">新增_後端表單驗證(測試用) </a>
                     </div>
 
                 </div>
