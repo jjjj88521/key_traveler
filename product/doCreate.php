@@ -1,13 +1,22 @@
 <?php
 
 require_once("../db_connect.php");
+// 有資訊為空 跳回原頁面
+if (empty($_POST["name"]) || empty($_POST["cate_1"]) || empty($_POST["cate_2"]) || empty($_POST["price"]) || empty($_POST["desription"]) || empty($_POST["quantity"]) || empty($_POST["brand"]) || empty($_FILES["img"]["name"])) {
+    header("location: product-create.php");
+    exit;
+}
+if (isset($_POST["is_groupBuy"]) && (empty($_POST["start"]) || empty($_POST["end"]) || empty($_POST["target_people"]))) {
+    header("location: product-create.php");
+    exit;
+}
 
 // 取得商品表單資訊
 $name = $_POST["name"];
 $cate_1 = $_POST["category_1"];
 $cate_2 = $_POST["category_2"];
 $price = $_POST["price"];
-$img = $_POST["img"];
+$img = $_FILES["img"]["name"];
 $description = $_POST["description"];
 $quantity = $_POST["quantity"];
 $brand = $_POST["brand"];
@@ -44,12 +53,30 @@ if ($conn->query($sql1) === TRUE) {
     $latestId = $conn->insert_id;
     echo "商品id: " . $latestId . "<br>";
     echo "新增商品成功";
+    // 上傳圖片到images/product資料夾
+    if ($_FILES["img"]["error"] == 0) {
+        $targetPath = "../images/product/";
+        $targetFilePath = $targetPath . $_FILES["img"]["name"];
+        if (!file_exists($targetFilePath)) {
+            // 上傳檔案到指定路徑
+            if (move_uploaded_file($_FILES["img"]["tmp_name"], $targetFilePath)) {
+                $filename =  $_FILES["img"]["name"];
+                echo "上傳成功, 檔名為" . $filename;
+            } else {
+                echo "上傳失敗";
+            }
+        } else {
+            var_dump($_FILES["img"]["error"]);
+        }
+    }
+
 
     // 假如為團購商品，就需要新增資訊進團購商品資料表
     if ($is_groupBuy == 1) {
         $start = $_POST["start"];
         $end = $_POST["end"];
         $target_people = $_POST["target_people"];
+        // 團購資訊為空 跳回原頁面
         $sql_maxId = "SELECT MAX(id) AS max_id FROM group_buy;";
         $result_maxId = $conn->query($sql_maxId);
         $row_maxId = $result_maxId->fetch_assoc();
@@ -68,7 +95,7 @@ if ($conn->query($sql1) === TRUE) {
         }
     }
     // 資料庫操作成功 回到指定的頁面
-    // header("location: create_user.php");
+    header("location: product-list.php");
 } else {
     echo "新增資料錯誤: " . $conn->error;
 }

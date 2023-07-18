@@ -112,6 +112,33 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- 確認下架框框 -->
+                                        <div class="modal fade" id="onOffModal<?= $product["id"] ?>" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">確認刪除</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <?php if ($product["valid"] == 1) : ?>
+                                                            <p>是否下架商品 <?= $product["id"] ?>?</p>
+                                                        <?php elseif ($product["valid"] == -1) : ?>
+                                                            <p>是否上架商品 <?= $product["id"] ?>?</p>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                                        <?php if ($product["valid"] == 1) : ?>
+                                                            <a class="btn btn-danger" href="doShelves.php?id=<?= $product["id"] ?>">下架</a>
+                                                        <?php elseif ($product["valid"] == -1) : ?>
+                                                            <a class="btn btn-success" href="doShelves.php?id=<?= $product["id"] ?>">上架</a>
+                                                        <?php endif; ?>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <tr>
                                             <td><?= $product["id"] ?></td>
                                             <td>
@@ -141,6 +168,13 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                                                     <a href="product.php?mode=edit&id=<?= $product["id"] ?>" title="編輯" class="btn btn-link p-1">
                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                     </a>
+                                                    <button title="上下架" type="button" data-bs-toggle="modal" data-bs-target="#onOffModal<?= $product["id"] ?>" class="btn btn-link p-1 deleteBtn">
+                                                        <?php if ($product["valid"] == 1) : ?>
+                                                            <i class="fa-solid fa-circle-arrow-down"></i>
+                                                        <?php elseif ($product["valid"] == -1) : ?>
+                                                            <i class="fa-solid fa-circle-arrow-up"></i>
+                                                        <?php endif; ?>
+                                                    </button>
                                                     <button title="刪除" type="button" data-bs-toggle="modal" data-bs-target="#infoModal<?= $product["id"] ?>" class="btn btn-link p-1 deleteBtn">
                                                         <i class="fa-solid fa-trash text-danger"></i>
                                                     </button>

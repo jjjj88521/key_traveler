@@ -90,7 +90,7 @@ include("./include/getCategory.php");
                         </li>
                     </ol>
                     <!-- 編輯表單 -->
-                    <form action="doUpdate.php" method="post">
+                    <form action="doUpdate.php" method="post" enctype="multipart/form-data">
                         <div class="row mx-0 flex-column align-items-center">
                             <!-- 圖檔放在images/product數字，數字為類別一 -->
                             <figure class="text-center">
@@ -136,6 +136,14 @@ include("./include/getCategory.php");
                                             <input type="checkbox" name="is_groupBuy" data-toggle="toggle" data-onlabel="團購商品" data-offlabel="一般商品" data-onstyle="primary" data-offstyle="secondary" id="groupBuyCheck" <?= $readonly ?> <?= $product["is_groupBuy"] ? "checked" : "" ?>>
                                         </td>
                                     </tr>
+                                    <?php if ($mode == "edit") : ?>
+                                        <tr>
+                                            <th>商品圖片</th>
+                                            <td>
+                                                <input type="file" name="img" class="form-control" value="<?= $product["img"] ?>">
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
                                     <tr>
                                         <th class="w-25">商品價格</th>
                                         <td>
@@ -166,17 +174,17 @@ include("./include/getCategory.php");
                                     <tr class="groupBuyForm" style="display: none">
                                         <th class="w-25">團購時間</th>
                                         <td class="d-flex align-items-center">
-                                            <input type="date" class="form-control gbFormItem" name="start" value="<?= $groupBuy["start"] ?>" <?= $readonly ?> required>
+                                            <input type="date" class="form-control" name="start" value="<?= $groupBuy["start"] ?>" <?= $readonly ?>>
                                             <span class="px-3">~</span>
-                                            <input type="date" class="form-control gbFormItem" name="end" value="<?= $groupBuy["end"] ?>" <?= $readonly ?> required>
+                                            <input type="date" class="form-control" name="end" value="<?= $groupBuy["end"] ?>" <?= $readonly ?>>
                                         </td>
                                     </tr>
                                     <tr class="groupBuyForm" style="display: none">
                                         <th class="w-25">開團人數（現在/目標）</th>
                                         <td class="d-flex align-items-center">
-                                            <input type="number" class="form-control w-25" value="<?= $groupBuy["current_people"] ?>" disabled readonly>
+                                            <input type="number" class="form-control w-25" name="current_people" value="<?= $groupBuy["current_people"] ?>" <?= $mode == "info" ? "disabled" : "" ?> readonly>
                                             <span class="px-3">/</span>
-                                            <input type="number" name="target_people gbFormItem" class="form-control w-25" value="<?= $groupBuy["target_people"] ?>" <?= $readonly ?> required>
+                                            <input type="number" name="target_people" class="form-control w-25" value="<?= $groupBuy["target_people"] ?>" <?= $readonly ?>>
                                         </td>
                                     </tr>
                                 </table>
@@ -215,37 +223,29 @@ include("./include/getCategory.php");
         const category2 = document.querySelector("#category_2");
         category1.addEventListener("change", function() {
             category2.innerHTML = "";
-            allCate[category1.selectedIndex].cate2.forEach(item => {
+            allCate[category1.selectedIndex - 1].cate2.forEach(item => {
                 category2.innerHTML += `<option value='${item}' name='category_2'>${item}</option>`;
             });
         })
 
-        function groupBuyDisplay(check, formItems) {
-            if (check.checked) {
-                groupBuyForm.forEach(item => {
+        // 若選取團購，則顯示團購需要輸入的資訊
+        function formDisplay(checkbox, element) {
+            if (checkbox.checked) {
+                element.forEach(item => {
                     item.style.display = "table-row";
                 })
-                formItems.forEach(item => {
-                    item.required = true;
-                })
             } else {
-                groupBuyForm.forEach(item => {
+                element.forEach(item => {
                     item.style.display = "none";
-                })
-                formItems.forEach(item => {
-                    item.required = false;
                 })
             }
         }
-
-
-        // 若選取團購，則顯示團購需要輸入的資訊
         const groupBuyCheck = document.querySelector("#groupBuyCheck");
         const groupBuyForm = document.querySelectorAll(".groupBuyForm");
-        const gbFormItem = document.querySelectorAll(".gbFormItem")
-        groupBuyDisplay(groupBuyCheck);
+
+        formDisplay(groupBuyCheck, groupBuyForm);
         groupBuyCheck.addEventListener("change", function(e) {
-            groupBuyDisplay(e.target, gbFormItem);
+            formDisplay(e.target, groupBuyForm);
         })
     </script>
 </body>

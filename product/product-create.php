@@ -37,11 +37,10 @@ $sqlBrand = "SELECT brand FROM ";
                         </li>
                     </ol>
                     <!-- 編輯表單 -->
-                    <form action="doCreate.php" method="post">
+                    <form action="doCreate.php" method="post" enctype="multipart/form-data">
                         <div class="row mx-0 flex-column align-items-center">
                             <!-- 圖檔放在images/product數字，數字為類別一 -->
                             <div class="card p-3 col-8 mb-3">
-                                <input type="hidden" name="id" value="<?= $product["id"] ?>">
                                 <table class="table table-bordered">
                                     <tr>
                                         <th class="w-25">商品名稱</th>
@@ -130,7 +129,7 @@ $sqlBrand = "SELECT brand FROM ";
                                 <div class="col d-flex justify-content-between mb-0">
                                     <div>
                                         <button type="submit" class="btn btn-success">新增</button>
-                                        <a href="product.php?mode=info&id=<?= $product_id ?>" class="btn btn-secondary mx-2">取消</a>
+                                        <a href="product-list.php" class="btn btn-secondary mx-2">取消</a>
                                     </div>
                                 </div>
                             </div>

@@ -31,7 +31,7 @@
                 <div class="collapse" id="order" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="/key_traveler/product/product-list.php">商品列表</a>
-                        <a class="nav-link" href="tables.php">商品評論</a>
+                        <a class="nav-link" href="/key_traveler/comment/comment.php">商品評論</a>
                     </nav>
                 </div>
                 <!-- =====類別管理===== -->
